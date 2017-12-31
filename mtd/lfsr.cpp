@@ -7,7 +7,7 @@
 #include<fstream>
 #include<unistd.h>
 #include<stdint.h>
-
+#include<iostream>
 using namespace std;
 void convertDectoHex(char output[],int ip_addr[]) {       
 int i,newArr[6],k,ctr;     
@@ -52,34 +52,36 @@ ctr /=2;
 i++;       
   }     
 }
+printf("%d.%d.%d",arr[2],arr[1],arr[0]);
+//char string[15];
 
- char string[15];
-
-system("ping 10.10.15.1 -c 1");
+system("ping 10.10.2.2 -c 1");
 }
 
-int main(void)
+int main(int argc,char *argv[] )
 {
-
-uint64_t start_state = 0.000005;
-uint64_t lfsr = start_state;
+//int i = 0;     
+//for (i = 0; i < argc; i++) 
+//{         
+//printf("argv[%d] = %s\n", i, argv[i]);    
+//}
 int ip_addr[24];
 char output[6];
 unsigned long int period=0;
 FILE *myfile;
-myfile=fopen("16_lfsrping_cpu.text", "a");
-clock_t t;
-t=clock();
+myfile=fopen("hashtime_2.txt", "a");
+//clock_t t;
+//t=clock();
 
 
-//char buffer[30];
+char buffer[30];
 //wall time
 
-//struct timeval tv;
-//time_t curtime;
-//gettimeofday(&tv,NULL);
-//curtime=tv.tv_sec;
-//strftime(buffer,30,"%T.",localtime(&curtime));
+struct timeval tv;
+time_t curtime;
+gettimeofday(&tv,NULL);
+curtime=tv.tv_sec;
+strftime(buffer,30,"%T.",localtime(&curtime));
 //printf("%s%ld\n",buffer,tv.tv_usec);
 
 
@@ -91,56 +93,45 @@ do{
 //gettimeofday(&tv,NULL);                                                                                          
 //curtime=tv.tv_sec;                                                                                               
 //strftime(buffer,30,"%T.",localtime(&curtime));                                                                   
-//printf("%s%ld\n",buffer,tv.tv_usec);                                                                             
-                                        
+//printf("%s%ld\n",buffer,tv.tv_usec); 
 
-
-unsigned lsb = lfsr &1;
-lfsr >>=1;
-
-if(lsb==1)
-lfsr ^=0xE00040u;
-sprintf(output,"%X",lfsr);
-
+//char string[100];
+                                                                       //snprintf(string, 100, "#!bin/bash read line echo $line | sha256sum>>line.txt echo $n n=$((n+1)) done <line.txt");
+//system(string);
+for(int i=0; i<argc; i++){
+sprintf(output,"%s",argv[i]);
+}
+//printf("%s\n",output);
 //char buffer2[230];                                                                                               
 //struct timeval tv2;                                                                                              
 //time_t curtime2;                                                                                                 
 //gettimeofday(&tv2,NULL);                                                                                         
-//curtime2=tv2.tv_sec;                                                                                             
-//strftime(buffer2,30,"%T.",localtime(&curtime2));                                                                 
-//printf("%s%ld seconds\n",buffer2,tv2.tv_usec);  
-
-
-//printf("%f\n",float(tv2.tv_usec-tv.tv_usec)/1000);
-
-//fprintf(myfile,"%f seconds", float(tv2.tv_usec-tv.tv_usec)/1000);                                                                        
-//fprintf(myfile,"\n");   
+//curtime2=tv2.tv_sec;                                                                                           
 convertDectoHex(output,ip_addr);
 ++period;
 }
-while(lfsr !=start_state && period!=1);
-printf("period cycle %d : %lu \n",clockcycle+1,period);
+while(period!=1);
+//printf("period cycle %d : %lu \n",clockcycle+1,period);
 period=0;
 clockcycle ++;
 }
 while(clockcycle!=1);
 
-t=clock()-t;
-double time_taken =((double)t)/CLOCKS_PER_SEC;
-fprintf(myfile,"%f", time_taken);
-fprintf(myfile,"\n");
-printf("%f \n", time_taken);
-//char buffer2[230];
-//struct timeval tv2;
-//time_t curtime2;
-//gettimeofday(&tv2,NULL);
-//curtime2=tv2.tv_sec;
-//strftime(buffer2,30,"%T.",localtime(&curtime2));
-//printf("%s%ld seconds\n",buffer2,tv2.tv_usec);
-
-//printf("%f\n",float(tv2.tv_usec-tv.tv_usec)/1000);
-//fprintf(myfile,"%f seconds", float(tv2.tv_usec-tv.tv_usec)/1000);
+//t=clock()-t;
+//double time_taken =((double)t)/CLOCKS_PER_SEC;
+//fprintf(myfile,"%f", time_taken);
 //fprintf(myfile,"\n");
+//printf("%f \n", time_taken);
+char buffer2[230];
+struct timeval tv2;
+time_t curtime2;
+gettimeofday(&tv2,NULL);
+curtime2=tv2.tv_sec;
+strftime(buffer2,30,"%T.",localtime(&curtime2));
+//printf("%s%ld seconds\n",buffer2,tv2.tv_usec);
+//printf("%f\n",float(tv2.tv_usec-tv.tv_usec)/1000);
+fprintf(myfile,"%f seconds", float(tv2.tv_usec-tv.tv_usec)/1000);
+fprintf(myfile,"\n");
 return 0;
 }
 
