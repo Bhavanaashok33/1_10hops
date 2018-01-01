@@ -52,10 +52,10 @@ ctr /=2;
 i++;       
   }     
 }
-printf("%d.%d.%d",arr[2],arr[1],arr[0]);
+//printf("%d.%d.%d",arr[2],arr[1],arr[0]);
 //char string[15];
 
-system("ping 10.10.2.2 -c 1");
+//system("ping 10.10.2.2 -c 1");
 }
 
 int main(int argc,char *argv[] )
@@ -68,15 +68,14 @@ int main(int argc,char *argv[] )
 int ip_addr[24];
 char output[6];
 unsigned long int period=0;
-FILE *myfile;
-myfile=fopen("hashtime_2.txt", "a");
+//FILE *myfile;
+//myfile=fopen("hashtime_lfsr1.txt", "a");
 //clock_t t;
 //t=clock();
 
 
 char buffer[30];
 //wall time
-
 struct timeval tv;
 time_t curtime;
 gettimeofday(&tv,NULL);
@@ -130,8 +129,8 @@ curtime2=tv2.tv_sec;
 strftime(buffer2,30,"%T.",localtime(&curtime2));
 //printf("%s%ld seconds\n",buffer2,tv2.tv_usec);
 //printf("%f\n",float(tv2.tv_usec-tv.tv_usec)/1000);
-fprintf(myfile,"%f seconds", float(tv2.tv_usec-tv.tv_usec)/1000);
-fprintf(myfile,"\n");
+//fprintf(myfile,"%f seconds", float(tv2.tv_usec-tv.tv_usec)/1000);
+//fprintf(myfile,"\n");
 return 0;
 }
 
