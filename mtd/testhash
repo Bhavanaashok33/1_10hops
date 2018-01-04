@@ -1,0 +1,10 @@
+#!/bin/bash
+n=0;
+basetime=$(date +%s%N)
+while [ $n -lt 10000 ];
+do
+echo $line | sha256sum >>hashfucn.txt;
+n=$((n+1))
+done<<output.text
+echo "runtime: $(echo "scale=3; ($(date +%s%N) - ${basetime})/1000000)" |bc) microseconds" 
+
